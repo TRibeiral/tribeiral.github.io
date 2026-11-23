@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Monitor de Exceções Pós-venda</title>
+<style>
+  :root {
+    --bg: #fafaf9; --fg: #1c1917; --muted: #57534e; --line: #e7e5e4;
+    --accent: #0f766e; --note-bg: #f0fdfa; --note-line: #99f6e4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1917; --fg: #f5f5f4; --muted: #a8a29e; --line: #44403c;
+      --accent: #5eead4; --note-bg: #134e4a; --note-line: #0f766e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 42rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+  h1 { font-size: 1.75rem; line-height: 1.25; margin: 0 0 .5rem; }
+  h2 { font-size: 1.1rem; margin: 2rem 0 .5rem; }
+  .lede { color: var(--muted); margin: 0 0 1.5rem; }
+  ul { padding-left: 1.25rem; }
+  li { margin: .25rem 0; }
+  .note {
+    display: none; border: 1px solid var(--note-line); background: var(--note-bg);
+    border-radius: .5rem; padding: 1rem 1.25rem; margin: 0 0 2rem;
+  }
+  .note.show { display: block; }
+  .note strong { color: var(--accent); }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: .875rem; }
+</style>
+</head>
+<body>
+<main>
+  <div class="note" id="authorized" role="status">
+    <strong>Autorização recebida.</strong>
+    Copie o endereço completo desta página (barra de endereços do navegador) e envie
+    diretamente ao responsável pela ferramenta. Esta página não guarda nem envia
+    nenhuma informação.
+  </div>
+  <div class="note" id="denied" role="status">
+    <strong>A autorização não foi concluída.</strong>
+    Nenhum acesso foi concedido. Se foi engano, peça um novo link de autorização.
+  </div>
+
+  <h1>Monitor de Exceções Pós-venda</h1>
+  <p class="lede">Ferramenta interna, somente leitura, que ajuda vendedores do Mercado Livre
+  a identificar vendas que precisam de atenção depois da compra.</p>
+
+  <h2>O que a ferramenta faz</h2>
+  <p>Com a autorização do vendedor, a ferramenta consulta pedidos, envios, reclamações,
+  devoluções e relatórios de faturamento da conta. Com isso, identifica casos como envios
+  não entregues, reclamações abertas e reembolsos sem devolução correspondente, e avisa
+  o vendedor para que ele possa agir a tempo.</p>
+
+  <h2>Somente leitura</h2>
+  <ul>
+    <li>Não altera anúncios, preços, pedidos nem envios.</li>
+    <li>Não responde mensagens nem reclamações.</li>
+    <li>Não movimenta dinheiro nem emite reembolsos.</li>
+    <li>Não tem acesso à senha do vendedor.</li>
+  </ul>
+  <p>O vendedor pode revogar a autorização a qualquer momento nas configurações de
+  segurança da sua conta do Mercado Livre.</p>
+
+  <h2>Dados dos compradores</h2>
+  <ul>
+    <li>Nome, apelido, telefone, e-mail, documentos e endereço completo dos compradores
+    são removidos antes de qualquer armazenamento.</li>
+    <li>Mensagens e dados fiscais dos compradores não são consultados.</li>
+    <li>Os dados ficam acessíveis apenas ao vendedor e ao responsável pela ferramenta,
+    e são apagados quando o vendedor encerra o uso.</li>
+  </ul>
+
+  <h2>Status</h2>
+  <p>Em fase piloto, com um vendedor.</p>
+
+  <footer>Esta página não usa cookies, rastreamento nem formulários.</footer>
+</main>
+<script>
+  (function () {
+    var p = new URLSearchParams(window.location.search);
+    if (p.has("code")) document.getElementById("authorized").classList.add("show");
+    else if (p.has("error")) document.getElementById("denied").classList.add("show");
+  })();
+</script>
+</body>
+</html>
